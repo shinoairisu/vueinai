@@ -1,0 +1,65 @@
+import os
+import time
+from glob import glob
+from loguru import logger
+
+from jinja2 import Template
+from config import config
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+
+
+def read_html(html):
+    with open(html, "r",encoding="utf-8") as f:
+        return f.read()
+
+def write_html(html, content):
+    with open("./static/" + html, "w",encoding="utf-8") as f:
+        f.write(content)
+
+def delete_htmls():
+        htmls = glob("./static/*.html")
+        for html in htmls:
+            os.remove(html)
+
+def collect_and_build_htmls():
+    """收集并编译html文件"""
+    # 不读取任何template_开头的html文件
+    htmls = [i for i in glob("./src/*.html", recursive=True) if "template_" not in i]
+    # 收集模板html
+    segments = [html for html in htmls if "seg_" in html ]
+    normal = [html for html in htmls if "seg_" not in html]
+    # 收集html片段
+    seg_contents = {os.path.split(s)[1].replace(".html",""):read_html(s) for s in segments}
+    # 收集普通html
+    normal_contents = {os.path.split(s)[1]:read_html(s) for s in normal}
+    for k,v in normal_contents.items():
+        content = Template(v)
+        content.environment.variable_start_string = "{@"
+        content.environment.variable_end_string = "@}"
+        html_content = Template(v).render(html=seg_contents, config=config)
+        write_html(k, html_content)
+
+def re_build_project():
+    delete_htmls()
+    collect_and_build_htmls()
+
+
+class HtmlFileHandler(FileSystemEventHandler):
+
+    def on_any_event(self, _):
+        """只要操作了html文件，就重新编译"""
+        logger.info(f"html文件发生变化，重新编译项目...")
+        time.sleep(0.5)
+        try:
+            re_build_project()
+        except Exception as e:
+            logger.error("重新编译项目失败: {}",e)
+
+
+observer = Observer()
+event_handler = HtmlFileHandler()
+observer.schedule(event_handler, path="./src", recursive=True)
+
+if __name__ == "__main__":
+    re_build_project()
