@@ -18,7 +18,9 @@
 
 <body>
     <div id="app">
-        <mt-button @click.native="handleClick">按钮</mt-button>
+        <mt-button @click.native="handleClick">按钮</mt-button> 
+        <!-- 在 Vue 组件上绑定的事件是自定义事件，这意味着它们不会直接响应原生 DOM 事件，如点击或输入。 -->
+        <!-- native修饰符是绑定原生事件，并不是点击组件里的button，而是点击了组件本身 -->
     </div>
 
 

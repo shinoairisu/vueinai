@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 用法：https://blog.csdn.net/wangsenling/article/details/128568432
+用法: https://socket.io/zh-CN/docs/v4/client-options/ -->
+<!-- socketio内置事件：https://blog.csdn.net/tiantangyouzui/article/details/51791129 -->
+<!-- 万字长文：https://blog.csdn.net/m0_51429350/article/details/147295043 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocketIO模板</title>
+    <script src="/static/lib_js/socket.io.min.js"></script>
+</head>
+
+<body>
+    <script>
+        // io中写的是 ws://xxxx.com/namespace
+        // path中写的是socketio_path
+        // transports中写的是链接方案，此处优先websocket。
+        // 如果不写，默认是轮询，然后升级为websocket。
+        const socket = io('/ws', {
+            path: '/wsk/socket.io',
+            transports: ['websocket', "polling"],
+        });
+        socket.on('test', (data) => {
+            console.log('连上了！');
+            console.log(data);
+        });
+
+    </script>
+</body>
+
+</html>

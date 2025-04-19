@@ -54,5 +54,8 @@ js和css请写在`static`目录中
 
 requirements不仅列出了python包，还列出了重要的功能组件，比如httpx，rich，kombu等。
 
+python-multipart库默认安装过了，不用单独安装。
+
+
 # 更新列表
 2025年4月12日 初始化项目，构建基础结构
