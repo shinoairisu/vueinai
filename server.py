@@ -6,6 +6,8 @@ import argparse
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+
 
 from utils.dogs import re_build_project,observer
 
@@ -15,11 +17,13 @@ parser.add_argument('-s','--host', type=str,default='0.0.0.0', help='服务器�
 parser.add_argument('-d','--debug', type=bool,default=True, help='是否开启debug模式')
 
 args = parser.parse_args()
-re_build_project()
+re_build_project() # 启动时会强制重构项目
 
 if args.debug:
-    observer.start()
+    observer.start() # 监控前端文件改变
+
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get('/content/{html_name}/{route:path}')
 async def static_pages(html_name:str,route:str):

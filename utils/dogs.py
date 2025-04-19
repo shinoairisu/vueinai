@@ -1,10 +1,12 @@
+"""软看门口，会在每次保存src目录的文件时，自动编译最新前端（server开在debug模式下）"""
 import os
 import time
 from glob import glob
-from loguru import logger
 
-from jinja2 import Template
+from tqdm import tqdm
+from loguru import logger
 from config import config
+from jinja2 import Template
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -33,7 +35,7 @@ def collect_and_build_htmls():
     seg_contents = {os.path.split(s)[1].replace(".html",""):read_html(s) for s in segments}
     # 收集普通html
     normal_contents = {os.path.split(s)[1]:read_html(s) for s in normal}
-    for k,v in normal_contents.items():
+    for k,v in tqdm(normal_contents.items(),desc="编辑html文件中"):
         content = Template(v)
         content.environment.variable_start_string = "{@"
         content.environment.variable_end_string = "@}"

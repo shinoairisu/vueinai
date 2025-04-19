@@ -6,4 +6,5 @@ jinja2
 watchdog
 nanoid
 loguru
+tqdm
 aiofiles
