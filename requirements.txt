@@ -8,3 +8,8 @@ nanoid
 loguru
 tqdm
 aiofiles
+pyparsing
+tinydb
+kombu
+httpx[cli,http2]
+rich

@@ -35,7 +35,7 @@ def collect_and_build_htmls():
     seg_contents = {os.path.split(s)[1].replace(".html",""):read_html(s) for s in segments}
     # 收集普通html
     normal_contents = {os.path.split(s)[1]:read_html(s) for s in normal}
-    for k,v in tqdm(normal_contents.items(),desc="编辑html文件中"):
+    for k,v in tqdm(normal_contents.items(),desc="编译html文件中"):
         content = Template(v)
         content.environment.variable_start_string = "{@"
         content.environment.variable_end_string = "@}"

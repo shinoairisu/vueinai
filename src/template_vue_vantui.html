@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- 展示基础的vue和移动端组件库 vant2 的模板 -->
+<!-- 注意：如果要调试vue，要使用vue.js，不是vue.min.js。 vue.js是debug模式，vue.min.js是生产模式-->
+<!-- 文档：https://develop365.gitlab.io/vant/v2/zh-CN/home/#/zh-CN/home -->
+<!-- 文档备份：https://vant.pro/vant/v2/#/zh-CN/ -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 网站图标 方案1 <link rel="icon" href="./path/to/favicon.png" type="image/png"> -->
+    <!-- 网站图标 方案2 <link rel="icon" href="./path/to/favicon.ico" type="image/x-icon"> -->
+    <title>vue和vant-ui模板</title>
+    <link rel="stylesheet" href="/static/lib_css/vant.css">
+    <script src="/static/lib_js/vue.js"></script>
+    <script src="/static/lib_js/vant.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+        <van-picker title="标题" show-toolbar :columns="columns" @confirm="onConfirm" @cancel="onCancel" @change="onChange" />
+        <div>
+            <van-rate v-model="rate_value" />
+        </div>
+        <div>
+            <van-rate v-model="rate_value2" />
+        </div>
+        <div>
+            <van-rate v-model="rate_value3" />
+        </div>
+        
+    </div>
+
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue.js!',
+                columns: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
+                rate_value: 3,
+                rate_value2: 3,
+                rate_value3: 3,
+            },
+            methods: {
+                onConfirm(value, index) {
+                    vant.Toast(`当前值：${value}, 当前索引：${index}`);
+                },
+                onChange(picker, value, index) {
+                    vant.Toast(`当前值：${value}, 当前索引：${index}`);
+                },
+                onCancel() {
+                    vant.Toast('取消');
+                },
+            }
+        })
+
+        // vant.Toast('提示'); //页面中间显示个黑框进行提示
+        // 通过 CDN 引入时不会自动注册 Lazyload 组件
+        // 可以通过下面的方式手动注册
+        // Vue.use(vant.Lazyload);
+
+
+    </script>
+</body>
+
+</html>

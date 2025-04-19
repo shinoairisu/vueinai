@@ -49,6 +49,10 @@ js和css请写在`static`目录中
 - holder.js
 - 
 
+- [状态机]https://github.com/jakesgordon/javascript-state-machine
+
+
+requirements不仅列出了python包，还列出了重要的功能组件，比如httpx，rich，kombu等。
 
 # 更新列表
 2025年4月12日 初始化项目，构建基础结构
