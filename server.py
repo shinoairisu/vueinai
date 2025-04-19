@@ -28,7 +28,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 socket_manager = SocketManager(
     app=app, mount_location="/wsk", socketio_path="/wsk/socket.io"
 )
-# socketio默认挂载点是/ws。新版的fastapi(0.115.12)中socketio_path正确应当是 '/ws/socket.io'
+# socketio默认挂载点(mount_location)是/ws。新版的fastapi(0.115.12)中socketio_path正确应当是 '/ws/socket.io'
 # socketio_path必须是 挂载点mount_location加上具体自定义路径。比如此处的/wsk/socket.io,否则和前端对不齐。
 # 因为fastapi的特殊,namesapce必须得写，否则找不到发送端点。
 
