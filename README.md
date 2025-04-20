@@ -97,8 +97,8 @@ template_ui_elementui.html  # 一个使用elementui的模板
 template_ui_mintui.html  # 一个使用mintui的模板
 template_ui_vantui.html  # 一个使用vantui的模板
 template_upload.html  # 一个上传文件的模板
-template_vue_component.vue  # 一个使用vue-component的VUE组件模板
-template_vue_components.html # 一个使用vue-components的html模板
+template_vue_component.vue  # 一个使用vue-component的VUE组件模板与事件总线
+template_vue_components.html # 一个使用vue-components的html模板与事件总线
 ```
 
 ## 其它自装工具
@@ -129,3 +129,4 @@ kombu是rabbitmq/redis的消息队列和缓存库。
 - 2024-05-01：改为elementui
 - 2025-04-01: 新增fastapi，模板
 - 2025-04-20: 新增模板，新增编译方式，新增CDN方式的router
+- 2025-04-21：新增事件总线模板

@@ -21,10 +21,24 @@
         new Vue({
             el: '#app',
             components: {
-                'school': httpVueLoader('/static/vues/vue_c1.vue')
+                // 注意调试本组件代码时必须开禁用缓存，否则默认只加载一次，不会更新代码。
+                'school': httpVueLoader('/static/vues/vue_c1.vue') 
             },
             data:{
                 s1:'高新一中'
+            },
+            beforeCreate() { // 在这里安装事件总线最完美
+                Vue.prototype.$bus = this // 安装全局事件总线
+            },
+            mounted() {
+                //在要接收数据的组件（此处为父组件）绑定一个监听事件
+                //和socketio一回事，方法一模一样。
+                this.$bus.$on('hello', (data) => { 
+                    console.log('收到hello事件，内容是', data)
+                })
+            },
+            beforeDestroy() {
+                this.$bus.$off('hello') // 解绑总线事件监听器，防止内存泄漏
             }
         })
     </script>

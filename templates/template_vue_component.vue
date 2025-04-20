@@ -1,6 +1,6 @@
 <template>
   <!-- template标签上方不能写任何东西包括注释 -->
-  <!-- 动态载入VUE组件 模板 -->
+  <!-- 动态载入VUE组件与事件总线 模板 -->
   <!-- 文档 https://www.npmjs.com/package/http-vue-loader -->
   <!-- 仓库 https://github.com/FranckFreiburger/http-vue-loader，本项目使用的是修复过bug的版本，与仓库不同-->
   <!-- vue组件与事件总线模板 -->
@@ -9,7 +9,8 @@
     <h1>{{ name }}</h1>
     <h2>{{ schoolname1 }}</h2>
     <h2>{{ schoolname2 }}</h2>
-    <!-- <button @click="tes1">tes1</button> -->
+    <h2>{{ schoolname2 }}</h2>
+    <button @click="emitEvent()">事件总线发射hello事件</button>
   </div>
 </template>
   
@@ -38,8 +39,8 @@ module.exports = {
     };
   },
   methods: {
-    tes1() {
-      console.log("tes1");
+    emitEvent() {
+      this.$bus.$emit("hello", "我就硬发射出来了！！！！");
     },
   },
 };

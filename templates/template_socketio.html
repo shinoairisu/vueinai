@@ -15,7 +15,9 @@
 
 <body>
     <script>
-        // io中写的是 ws://xxxx.com/namespace
+        // io中其实写的是 ws://xxxx.com/namespace
+        // 此处直接写/namespace是因为同源
+        // 跨域要写全路径，而且可能要开CORS
         // path中写的是socketio_path
         // transports中写的是链接方案，此处优先websocket。
         // 如果不写，默认是轮询，然后升级为websocket。
