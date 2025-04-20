@@ -71,6 +71,7 @@ async def getest(name: str):
 async def cookieget(name: str | None = Cookie(default=None),value: str | None = Cookie(default=None)):
     """测试接收cookies"""
     logger.debug("前端发送带cookies请求，内容为{}:{}", name,value)
+    return "后端收到"
 
 
 # axios的cookies设置模板，不用可以删除
@@ -78,7 +79,10 @@ async def cookieget(name: str | None = Cookie(default=None),value: str | None = 
 async def cookieset(response: Response):
     """测试设置cookies"""
     logger.debug("收到cookies设置请求")
-    response.set_cookie(key="ads_id", value="1234567890", expires=time.time() + 3600)
+    # cookies是禁止放中文的
+    # 浏览器的cookies会变成 ： 2025-04-20T10:06:10.268Z  
+    # T是分隔符，z指的是UTC。2025-04-20日 格林尼治时间 10:06:10.268 到期
+    response.set_cookie(key="ads_id", value="998877665544", expires=60*2) # 2分钟过期
     return {"message": "cookie设置成功"}
 
 

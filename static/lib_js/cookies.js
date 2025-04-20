@@ -1,4 +1,4 @@
-function setCookie(name, value, iDay) {
+function setCookie(name, value, iDay=1) {
     var oDate = new Date();
     oDate.setDate(oDate.getDate() + iDay);
     document.cookie = name + '=' + value + ';expires=' + oDate + ";path=/";

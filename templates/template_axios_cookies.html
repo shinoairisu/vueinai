@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<!-- 展示简单上传 -->
-<!-- fastapi配合上传，参考：https://www.cnblogs.com/puffer/p/16408485.html -->
-<!-- fastapi文档：https://fastapi.tiangolo.com/zh/reference/uploadfile/?h=upload#fastapi.UploadFile -->
-<!-- fastapi文档：https://fastapi.tiangolo.com/zh/tutorial/request-forms-and-files/?h=file#file-form_1 -->
-<!-- axios上传下载进度：https://blog.csdn.net/weixin_43806705/article/details/132191442 -->
-<!-- axios基础上传文件：https://blog.csdn.net/Maxueyingying/article/details/136685439 -->
+<!-- 展示axios携带cookies请求 -->
+<!-- axios用法:https://www.runoob.com/vue2/vuejs-ajax-axios.html -->
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件上传示例</title>
+    <title>axios带cookies请求示例</title>
     <script src="/static/lib_js/axios.min.js"></script>
+    <script src="/static/lib_js/cookies.js"></script>
 </head>
 
 <body>
-    <input id="fileInput" type="file" name="mufile">
-    <button onclick="upload()">上传</button>
-
+    <div>前端设置cookies值：name,value,并发送给后端</div> 
+    <button onclick="sendRequest1()">发送请求1，并在后端打印cookies</button>
+    <hr>
+    <div>后端设置cookies值：ads_id,并且发送给前端</div> 
+    <button onclick="sendRequest2()">发送请求2，并在前端打印cookies</button>
     <script>
-        function upload() {
-            const fileInput = document.querySelector('#fileInput');
-            const file = fileInput.files[0];
-            const formData = new FormData(); // 需要用表单上传，所以要新建个表单
-            formData.append('file', file);
-            axios.post('/api/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then(
-                console.log("上传完毕")
-            ).catch(error => {
-                console.error('上传失败', error);
+        // cookies规范要求必须编码为latin-1，因此无法携带中文
+        function sendRequest1() {
+            setCookie("name", "test")
+            setCookie("value", 18)
+            axios
+            .get("/api/cookiegetest",{withCredentials: true}) // 跨域必须带这个true，然后开启CORS。同源其实不用写这个参数
+            .then(res => {
+                console.log(res.data)
+            })
+        }
+
+        function sendRequest2() {
+            axios
+            .get("/api/cookiesetest",{withCredentials: true}) // 跨域必须带这个true，然后开启CORS。同源其实不用写这个参数
+            .then(res => {
+                console.log(res.data)
+                console.log(getCookie("ads_id"))
             })
         }
     </script>
