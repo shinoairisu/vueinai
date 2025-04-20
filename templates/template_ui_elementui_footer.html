@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- element-ui的模板 footer沉底演示-->
+<!-- footer沉底的方案：https://blog.csdn.net/m0_56522868/article/details/117985544 -->
+<!-- footer沉底的方案：min-height: 100vh; -->
+<!-- https://www.cnblogs.com/sener/p/15192890.html -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/lib_css/elementui.css">
+    <script src="/static/lib_js/vue.js"></script>
+    <script src="/static/lib_js/elementui.js"></script>
+    <style>
+        #app {
+            position:absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <el-container class="container">
+            <el-header>Header</el-header>
+            <el-main>Main</el-main>
+            <el-footer>Footer</el-footer>
+        </el-container>
+    </div>
+    
+    <script>
+        new Vue({
+          el: '#app',
+          data: {
+            message: 'Hello Vue.js!'
+          }
+        })
+        </script>
+</body>
+</html>
