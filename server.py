@@ -15,7 +15,7 @@ from utils.dogs import re_build_project, observer
 parser = argparse.ArgumentParser(description="前端服务器")
 parser.add_argument("-p", "--port", type=int, default=12580, help="服务器端口")
 parser.add_argument("-s", "--host", type=str, default="0.0.0.0", help="服务器地址")
-parser.add_argument("-d", "--debug", type=bool, default=True, help="是否开启debug模式")
+parser.add_argument("-d", "--debug", required=True, type=bool, help="是否开启debug模式")
 
 args = parser.parse_args()
 re_build_project()  # 启动时会强制重构项目
