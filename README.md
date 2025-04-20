@@ -79,9 +79,9 @@ lodash // 用于数组、对象、字符串等操作
 holder // 用于临时占位的svg库，来不及找图先用这个库占位置
 ```
 ### UI库
-element-ui // 基于vue的PC端UI库
-mintui // 基于vue的移动端UI库
-vant // 基于vue的移动端UI库
+- element-ui // 基于vue的PC端UI库
+- mintui // 基于vue的移动端UI库
+- vant // 基于vue的移动端UI库
 
 ## 项目模板
 `templates`目录下带有一些快速启动模板，可以开箱即用。
