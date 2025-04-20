@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 文档 https://www.npmjs.com/package/http-vue-loader -->
+<!-- 仓库 https://github.com/FranckFreiburger/http-vue-loader -->
+<!-- 本项目使用的版本 https://blog.csdn.net/cbaili/article/details/122726149 -->
+<!-- vue组件动态载入与事件总线调用模板 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue组件与事件总线模板</title>
+    <script src="/static/lib_js/vue.js"></script>
+    <script src="/static/lib_js/httpVueLoader.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 属性名字不能含有大写、空格 -->
+        <school :schoolname1="s1" schoolname2="西工大"></school>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            components: {
+                'school': httpVueLoader('/static/vues/vue_c1.vue')
+            },
+            data:{
+                s1:'高新一中'
+            }
+        })
+    </script>
+</body>
+
+</html>

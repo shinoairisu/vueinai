@@ -28,7 +28,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 socket_manager = SocketManager(
     app=app, mount_location="/wsk", socketio_path="/wsk/socket.io"
 )
-# socketio默认挂载点(mount_location)是/ws。新版的fastapi(0.115.12)中socketio_path正确应当是 '/ws/socket.io'
+# socketio默认挂载点(mount_location)是/ws。新版的fastapi(0.115.12)中socketio_path正确应当是 '/ws(挂载点)/socket.io'
 # socketio_path必须是 挂载点mount_location加上具体自定义路径。比如此处的/wsk/socket.io,否则和前端对不齐。
 # 因为fastapi的特殊,namesapce必须得写，否则找不到发送端点。
 
@@ -51,6 +51,8 @@ async def static_pages(html_name: str, route: str):
 @socket_manager.on("connect", namespace="/ws")
 async def handle_connect(sid, message):
     logger.debug("前端连接成功，sid为{}", sid)
+    # emit不需要手动指定sid,但是必须指定namespace,因为不同namespace下有一样的sid的。
+    # 除非是用户1想给用户2发信息。
     await socket_manager.emit(
         "test", "你好，前端！", namespace="/ws"
     )  # 必须要写namespace
@@ -66,10 +68,9 @@ async def getest(name: str):
 
 # axios的cookies获取模板，不用可以删除
 @app.get("/api/cookiegetest")
-async def cookieget(name: str | None = Cookie(default=None)):
+async def cookieget(name: str | None = Cookie(default=None),value: str | None = Cookie(default=None)):
     """测试接收cookies"""
-    logger.debug("前端发送带cookies请求，内容为{}", name)
-    return {"message": "cookie测试成功", "cookie_key": "ads_id", "cookie_value": name}
+    logger.debug("前端发送带cookies请求，内容为{}:{}", name,value)
 
 
 # axios的cookies设置模板，不用可以删除

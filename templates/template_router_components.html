@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 展示前端路由系统 -->
+<!-- CDN版本vue开发简单单页面软件 -->
+<!-- CDN玩VUE路由 https://www.runoob.com/vue2/vue-routing.html-->
+<!-- CDN玩VUE路由 https://blog.csdn.net/qq_41756580/article/details/91953394-->
+<!-- 动态加载vue组件 https://www.npmjs.com/package/http-vue-loader -->
+<!-- 配套 template_router_component.vue 组件使用 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前端路由系统</title>
+    <script src="/static/lib_js/vue.js"></script>
+    <script src="/static/lib_js/vue-router.min.js"></script>
+    <script src="/static/lib_js/httpVueLoader.js"></script>
+    <style>
+        #tese {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ message1 }}</p>
+        <!-- 使用 router-link 组件来导航. -->
+        <!-- 通过传入 `to` 属性指定链接. -->
+        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+        <!-- 想要不渲染为 a也可以，设置 tag="li"，或者别的，渲染成别的标签 -->
+        <!-- event = "mousehover" 用来声明触发导航的事件 -->
+        <!-- 注意这里的${} 是js的format字符串的占位符，因为:to里直接写得就是js语句。 -->
+
+        <router-link :to="`/foo?id=6666&namee=${message1}`">Go to Foo</router-link> <!-- 路由传参用查询语句传参 -->
+        <router-link to="/bar">Go to Bar</router-link>
+        <button @click="gotofoo">按钮手动式跳转到foo</button>
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <!-- 所以一个组件只能有一个路由组件，想要两个需要用命名路由。但是通常一个路由组件就足够了。 -->
+        <router-view></router-view>
+    </div>
+    <script>
+
+        const routes = [
+            { path: '/foo', component: httpVueLoader('/static/tes1.vue') },
+            { path: '/bar', component: httpVueLoader('/static/tes2.vue') },
+        ]
+        
+        const router = new VueRouter({
+            mode: 'hash',// 默认是hash模式，也可以改为history模式
+            routes // （缩写）相当于 routes: routes
+        })
+
+        // 解决vue-router 3.1.0+版本中的NavigationDuplicated错误
+        // 就是 3.1.0+ 版本中，使用push前往同一个路由且参数不变的情况下，会抛出NavigationDuplicated错误
+        // 这里给它屏蔽了
+        // 方案来自：https://blog.csdn.net/qq_53847859/article/details/138062536
+        const originalPush = VueRouter.prototype.push
+        VueRouter.prototype.push = function push(location) {
+            return originalPush.call(this, location).catch(err => err)
+        }
+
+        new Vue({
+            el: '#app',
+            router,
+            data: {
+                message1: 'Hello Vue.js!',
+                message2: 'Hello Vue.js2!',
+                message3: 'Hello Vue.js3!',
+            },
+            methods: {
+                gotofoo() {
+                    this.$router.push({ path: '/foo', query: { id: 6666, namee: this.message1 } })
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

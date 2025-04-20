@@ -1,18 +1,40 @@
 <!DOCTYPE html>
+<html lang="en">
 <!-- 展示简单上传 -->
 <!-- fastapi配合上传，参考：https://www.cnblogs.com/puffer/p/16408485.html -->
 <!-- fastapi文档：https://fastapi.tiangolo.com/zh/reference/uploadfile/?h=upload#fastapi.UploadFile -->
 <!-- fastapi文档：https://fastapi.tiangolo.com/zh/tutorial/request-forms-and-files/?h=file#file-form_1 -->
 <!-- axios上传下载进度：https://blog.csdn.net/weixin_43806705/article/details/132191442 -->
 <!-- axios基础上传文件：https://blog.csdn.net/Maxueyingying/article/details/136685439 -->
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文件上传示例</title>
+    <script src="/static/lib_js/axios.min.js"></script>
 </head>
-<body>
-    <input type="file" name="mufile">
 
+<body>
+    <input id="fileInput" type="file" name="mufile">
+    <button onclick="upload()">上传</button>
+
+    <script>
+        function upload() {
+            const fileInput = document.querySelector('#fileInput');
+            const file = fileInput.files[0];
+            const formData = new FormData(); // 需要用表单上传，所以要新建个表单
+            formData.append('file', file);
+            axios.post('/api/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(
+                console.log("上传完毕")
+            ).catch(error => {
+                console.error('上传失败', error);
+            })
+        }
+    </script>
 </body>
+
 </html>

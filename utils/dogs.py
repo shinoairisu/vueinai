@@ -20,6 +20,7 @@ def write_html(html, content):
         f.write(content)
 
 def delete_htmls():
+        """删除所有项目文件"""
         htmls = glob("./static/*.html")
         for html in htmls:
             os.remove(html)
